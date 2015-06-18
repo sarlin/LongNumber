@@ -3,20 +3,19 @@
 #include <stdio.h>
 #include "LibraryLong.h"
 
-#define DWord 4294967296
-
 struct LongNumber ReadBinFile(const char* file)
 {
 	FILE* in = fopen(file, "rb");
 	struct LongNumber number;
+	number.size = 0;
 
 	fseek(in, 0, SEEK_END);
-	unsigned int quotient, ost, size = ftell(in);
+	unsigned int quotient, remainder, size = ftell(in);
 
 	quotient = size / sizeof(unsigned int);
-	ost = size % sizeof(unsigned int);
+	remainder = size % sizeof(unsigned int);
 
-	if (ost == 0)
+	if (remainder == 0)
 		number = Allocate(number, quotient);
 	else
 		number = Allocate(number, quotient + 1);
@@ -28,12 +27,12 @@ struct LongNumber ReadBinFile(const char* file)
 
 	number.size = quotient;
 
-	if (ost != 0)
+	if (remainder != 0)
 	{
 		unsigned char ch;
 		number.size++;
 		number.part[quotient] = 0;
-		for (int j = 0; j<ost; j++)
+		for (int j = 0; j<remainder; j++)
 		{
 			fread(&ch, sizeof(unsigned char), 1, in);
 			number.part[quotient] |= (ch << j * 8);
@@ -57,123 +56,19 @@ void WriteBinFile(const char* file, struct LongNumber number)
 	fclose(out);
 }
 
-const struct LongNumber ReadTextFile(const char* file)
+struct LongNumber ReadTextFile(const char* file)
 {
 	struct LongNumber bin, number;
-	unsigned int a, carry = 0, tmp, current = 1, j = 0, x = 0;
 	char ch;
+
+	number.size = 0;
 
 	FILE *in = fopen(file, "r");
 
 	fseek(in, 0, SEEK_END);
 	number.size = ftell(in);
 
-	fseek(in, SEEK_SET, 0);
-
-	number = Allocate(number, number.size);
-	number = Zero(number, number.size);
-
-	bin.size = number.size / 9 + 1;
-
-	bin = Allocate(bin, bin.size);
-	bin = Zero(bin, bin.size);
-
-	long long int i = number.size - 1;
-
-	while ((ch = getc(in)) != EOF)
-	{
-		number.part[i--] = ch - '0';
-	}
-
-	fclose(in);
-
-	while (number.size != 1 || number.part[0] != 0)
-	{
-		carry = 0;
-
-		for (i = number.size - 1; i >= 0; i--)
-		{
-			tmp = carry * 10 + number.part[i];
-			number.part[i] = tmp / 2;
-			carry = tmp - number.part[i] * 2;
-		}
-
-		number = Norm(number);
-
-		bin.part[j] = ((current << x) * carry) | bin.part[j];
-
-		x++;
-
-		if (x == 32)
-		{
-			x = 0;
-			j++;
-		}
-	}
-
-	number = Clear(number);
-
-	bin = Norm(bin);
-
-	return bin;
-}
-
-const void WriteTextFile(const char* file, struct LongNumber number)
-{
-	FILE* out = fopen(file, "w");
-
-	struct LongNumber decimal;
-	unsigned int a, j = 0;
-	unsigned int carry = 0;
-	long long int tmp, i = number.size - 1;
-
-	decimal.size = number.size * 10;
-
-	decimal = Allocate(decimal, decimal.size);
-	decimal = Zero(decimal, decimal.size);
-
-	while (number.size != 1 || number.part[0] != 0)
-	{
-		carry = 0;
-
-		for (i = number.size - 1; i >= 0; i--)
-		{
-			tmp = carry * DWord + number.part[i];
-			number.part[i] = tmp / 10;
-			carry = tmp - (long long int) number.part[i] * 10;
-		}
-
-		decimal.part[j] = carry;
-		j++;
-
-		number = Norm(number);
-	}
-
-	decimal = Norm(decimal);
-
-	for (int i = decimal.size - 1; i > -1; i--)
-		fprintf(out, "%c", decimal.part[i]);
-
-	fclose(out);
-}
-
-struct LongNumber ReadStr(const char* num)
-{
-	struct LongNumber bin, number;
-	char ch;
-	long long int i = 0;
-
-	for (; i < strlen(num); i++)
-	if (num[i] < '0' || num[i] > '9')
-	{
-		printf("Error: Wrong string: %s \n", num);
-		bin.part = (unsigned int*)malloc(sizeof(unsigned int)*(1));
-		bin.part[0] = 0;
-		bin.size = 1;
-		return bin;
-	}
-
-	number.size = strlen(num);
+	fseek(in, SEEK_SET, 0); 
 
 	number = Allocate(number, number.size);
 	number = Zero(number, number.size);
@@ -185,10 +80,14 @@ struct LongNumber ReadStr(const char* num)
 
 	unsigned int a, carry = 0, tmp, current, j, x;
 
-	i = number.size - 1;
+	long long int i = number.size - 1;
 
-	for (; i > -1; --i)
-		number.part[i] = num[number.size - i - 1] - '0';
+	while ((ch = getc(in)) != EOF)
+	{
+		number.part[i--] = ch - '0';
+	}
+
+	fclose(in);
 
 	current = 1;
 	j = 0;
@@ -225,8 +124,10 @@ struct LongNumber ReadStr(const char* num)
 	return bin;
 }
 
-char* PrintN(struct LongNumber number)
+void WriteTextFile(const char* file, struct LongNumber number)
 {
+	FILE* out = fopen(file, "w");
+
 	struct LongNumber decimal;
 
 	decimal.size = number.size * 10;
@@ -244,7 +145,7 @@ char* PrintN(struct LongNumber number)
 
 		for (i = number.size - 1; i >= 0; i--)
 		{
-			tmp = carry * DWord + number.part[i];
+			tmp = carry * dword + number.part[i];
 			number.part[i] = tmp / 10;
 			carry = tmp - (long long int) number.part[i] * 10;
 		}
@@ -259,38 +160,10 @@ char* PrintN(struct LongNumber number)
 
 	decimal = Norm(decimal);
 
-	char *string = NULL;
-	j = 0;
+	for (int i = decimal.size - 1; i > -1; i--)
+		fprintf(out, "%c", decimal.part[i]);
 
-	string = (char*)malloc(sizeof(char)*(1));
-	string[0] = '\0';
-
-	for (i = decimal.size - 1; i > -1; i--)
-		printf("%c", decimal.part[i]);
-
-	free(decimal.part);
-	decimal.size = 0;
-
-	return string;
-}
-
-struct LongNumber ReadN(unsigned long long int value)
-{
-	struct LongNumber num;
-
-	num.part = (unsigned int*)malloc(sizeof(unsigned int)*(3));
-	num.size = 0;
-
-	unsigned long long int carry = value;
-
-	do
-	{
-		num.size++;
-		num.part[num.size - 1] = carry % DWord;
-		carry = carry / DWord;
-	} while (carry);
-
-	return num;
+	fclose(out);
 }
 
 struct LongNumber Clear(struct LongNumber number)
@@ -311,7 +184,7 @@ struct LongNumber Zero(struct LongNumber number, unsigned int size)
 	return number;
 }
 
-struct LongNumber Shift(struct LongNumber a, unsigned int s) 
+struct LongNumber Shift(struct LongNumber a, unsigned int s)
 {
 	struct LongNumber current;
 
@@ -343,34 +216,11 @@ struct LongNumber MulSmall(struct LongNumber a, unsigned long long int b)
 	for (j = 0; j < a.size; j++)
 	{
 		tmp = b * (unsigned long long int) a.part[j] + (unsigned long long int) carry + (unsigned long long int) res.part[j];
-		carry = tmp / DWord;
-		res.part[j] = tmp % DWord;
+		carry = tmp / dword;
+		res.part[j] = tmp % dword;
 	}
 
 	res.part[a.size] = carry;
-
-	res = Norm(res);
-
-	return res;
-}
-
-struct LongNumber DivSmall(struct LongNumber a, unsigned long long int b)
-{
-	unsigned long long int tmp;
-	unsigned int carry = 0;
-	int i;
-
-	struct LongNumber res;
-	res.size = a.size;
-	res = Allocate(res, res.size);
-	res = Zero(res, res.size);
-
-	for (i = a.size - 1; i > -1; i--)
-	{
-		tmp = (unsigned long long int) carry * DWord + (unsigned long long int) a.part[i];
-		res.part[i] = tmp / b;
-		carry = tmp - (unsigned long long int) res.part[i] * (unsigned long long int) b;
-	}
 
 	res = Norm(res);
 
@@ -406,9 +256,8 @@ int Compare(struct LongNumber a, struct LongNumber b)
 
 	if (a.part[i] < b.part[i])
 		return -1;
-
-	if (a.part[i] == b.part[i])
-		return 0;
+	
+	return 0;
 }
 
 struct LongNumber Sum(struct LongNumber a, struct LongNumber b)
@@ -428,10 +277,10 @@ struct LongNumber Sum(struct LongNumber a, struct LongNumber b)
 
 	for (i = 0; i<b.size; i++)
 	{
-		tmp = (unsigned long long int) a.part[i] + (unsigned long long int) b.part[i] + (unsigned long long int) carry;
-		if (tmp >= DWord)
+		tmp = a.part[i] + b.part[i] + carry;
+		if (tmp >= dword)
 		{
-			tmp= tmp - DWord;
+			tmp= tmp - dword;
 			carry = 1;
 		}
 		else carry = 0;
@@ -441,11 +290,11 @@ struct LongNumber Sum(struct LongNumber a, struct LongNumber b)
 
 	for (; i < a.size; i++)
 	{
-		tmp = (unsigned long long int) a.part[i] + (unsigned long long int) carry;
+		tmp = a.part[i] + carry;
 
-		if (tmp >= DWord)
+		if (tmp >= dword)
 		{
-			res.part[i] = tmp - DWord;
+			res.part[i] = tmp - dword;
 			carry = 1;
 		}
 		else
@@ -462,9 +311,7 @@ struct LongNumber Sum(struct LongNumber a, struct LongNumber b)
 	}
 	else
 		res.size = a.size;
-
 	res = Norm(res);
-
 	return res;
 }
 
@@ -486,11 +333,11 @@ struct LongNumber Dif(struct LongNumber a, struct LongNumber b)
 
 	for (i = 0; i<b.size; i++)
 	{
-		tmp = (long long int)a.part[i] - (long long int) b.part[i] - (long long int) carry;
+		tmp = a.part[i] - b.part[i] - carry;
 
 		if (tmp < 0)
 		{
-			tmp = tmp + DWord;
+			tmp = tmp + dword;
 			carry = 1;
 		}
 		else carry = 0;
@@ -499,11 +346,11 @@ struct LongNumber Dif(struct LongNumber a, struct LongNumber b)
 
 	for (; i<a.size; i++)
 	{
-		tmp = (long long int) a.part[i] - (long long int) carry;
+		tmp = a.part[i] - carry;
 
 		if (tmp < 0)
 		{
-			res.part[i] = tmp + DWord;
+			res.part[i] = tmp + dword;
 			carry = 1;
 		}
 		else
@@ -514,7 +361,6 @@ struct LongNumber Dif(struct LongNumber a, struct LongNumber b)
 	}
 
 	res = Norm(res);
-
 	return res;
 }
 
@@ -528,28 +374,26 @@ struct LongNumber Mul(struct LongNumber a, struct LongNumber b)
 	res.size = a.size + b.size;
 	res = Allocate(res, res.size);
 	res = Zero(res, res.size);
-
 	for (i = 0; i < b.size; i++)
 	{
 		carry = 0;
 
 		for (j = 0; j < a.size; j++)
 		{
-			tmp = (unsigned long long int) b.part[i] * (unsigned long long int) a.part[j] + (unsigned long long int) carry + (unsigned long long int) res.part[i + j];
-			carry = tmp / DWord;
-			res.part[i + j] = tmp % DWord;
+			tmp = b.part[i] * a.part[j] + carry + res.part[i + j];
+			carry = tmp / dword;
+			res.part[i + j] = tmp % dword;
 		}
 		res.part[i + a.size] = carry;
 	}
 
 	res = Norm(res);
-
 	return res;
 }
 
 struct LongNumber Div(struct LongNumber a, struct LongNumber b, int choice)
 {
-	struct LongNumber ost; 
+	struct LongNumber remainder; 
 
 	if (Compare(a, b) < 0) 
 	{
@@ -568,38 +412,40 @@ struct LongNumber Div(struct LongNumber a, struct LongNumber b, int choice)
 	{
 		if (b.part[0] == 0) 
 		{
-			ost.size = 0;
-			ost.part = NULL;
+			remainder.size = 0;
+			remainder.part = NULL;
 
-			return ost;
+			return remainder;
 		}
 
 		LongNumber res = DivSmall(a, b.part[0]);
 
-		ost = Dif(a, MulSmall(res, b.part[0]));
+		remainder = Dif(a, MulSmall(res, b.part[0]));
 
 		return res;
 
 	}
 
-	ost = Copy(a);
+	remainder = Copy(a);
 
 	struct LongNumber res;
 	res.size = a.size - b.size + 1;
 	res = Allocate(res, res.size);
 	res = Zero(res, res.size); 
+
 	unsigned int i;
 
 	for (i = a.size - b.size + 1; i != 0; i--)
 	{
-		unsigned long long int qGuessMax = DWord, qGuessMin = 0, qGuess;
+		unsigned long long int qGuessMax = dword, qGuessMin = 0, qGuess;
 
 		while (qGuessMax - qGuessMin > 1)
 		{
 			qGuess = (qGuessMax + qGuessMin) / 2;
+
 			struct LongNumber tmp = MulSmall(b, qGuess);
-			tmp = Shift(tmp, i - 1);
-			if (Compare(tmp, ost) > 0)
+			tmp = Shift(tmp, i - 1);    
+			if (Compare(tmp, remainder) > 0)
 				qGuessMax = qGuess;
 			else
 				qGuessMin = qGuess;
@@ -610,24 +456,28 @@ struct LongNumber Div(struct LongNumber a, struct LongNumber b, int choice)
 		struct LongNumber tmp = MulSmall(b, qGuessMin);
 		tmp = Shift(tmp, i - 1);
 
-		ost = Dif(ost, tmp);
+		remainder = Dif(remainder, tmp);
 
 		tmp = Clear(tmp);
 
 		res.part[i - 1] = qGuessMin;
 	}
 
+	remainder = Norm(remainder);
+
+	res = Norm(res);
+
 	if (choice == 1)
 	{
 		res = Norm(res);
-		ost = Clear(ost);
+		Clear(remainder);
 		return res;
 	}
 	else
 	{
-		ost = Norm(ost);
-		res = Clear(res);
-		return ost;
+		remainder = Norm(remainder);
+		Clear(res);
+		return remainder;
 	}
 }
 
@@ -640,7 +490,7 @@ struct LongNumber Deg(struct LongNumber a, struct LongNumber b, struct LongNumbe
 		res.size = a.size + a.size;
 
 	res = Allocate(res, res.size);
-	res = Zero(res, res.size); 
+	res = Zero(res, res.size);
 	res.part[0] = 1;
 
 	struct LongNumber com;
@@ -673,6 +523,29 @@ struct LongNumber Deg(struct LongNumber a, struct LongNumber b, struct LongNumbe
 	com = Clear(com);
 	pow = Clear(pow);
 	value = Clear(value);
+
+	res = Norm(res);
+	return res;
+}
+
+struct LongNumber DivSmall(struct LongNumber a, unsigned long long int b)
+{
+	unsigned long long int tmp;
+	unsigned int carry = 0;
+	int i;
+
+	struct LongNumber res;
+	res.size = a.size;
+	res = Allocate(res, res.size);
+	res = Zero(res, res.size); 
+	for (i = a.size - 1; i > -1; i--)
+	{
+		tmp = carry * dword + a.part[i];
+		res.part[i] = tmp / b;
+		carry = tmp - res.part[i] * b;
+	}
+
+	res = Norm(res);
 
 	return res;
 }
