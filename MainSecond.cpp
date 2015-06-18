@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "LN_Class.h"
+#include "ClassLong.h"
 
 int main(int argc, const char * argv[])
 {
