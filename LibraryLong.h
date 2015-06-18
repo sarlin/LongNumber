@@ -1,12 +1,15 @@
+#define dword 4294967296
+
 struct LongNumber
 {
-	unsigned int size;
+	unsigned long long int size;
 	unsigned int* part;
 };
+
 struct LongNumber ReadBinFile(const char* file);
 void WriteBinFile(const char* file, struct LongNumber number);
-const struct LongNumber ReadTextFile(const char* file);
-const void WriteTextFile(const char* file, struct LongNumber number);
+struct LongNumber ReadTextFile(const char* file);
+void WriteTextFile(const char* file, struct LongNumber number);
 struct LongNumber Sum(struct LongNumber a, struct LongNumber b);
 struct LongNumber Dif(struct LongNumber a, struct LongNumber b);
 struct LongNumber Mul(struct LongNumber a, struct LongNumber b);
@@ -21,6 +24,3 @@ struct LongNumber Zero(struct LongNumber number, unsigned int size);
 int Compare(struct LongNumber a, struct LongNumber b);
 struct LongNumber Copy(struct LongNumber from);
 struct LongNumber Norm(struct LongNumber a);
-struct LongNumber ReadStr(const char* num);
-char* PrintN(struct LongNumber number);
-struct LongNumber ReadN(unsigned long long int value);
