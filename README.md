@@ -12,3 +12,17 @@ How to use Makefile:
     -type in console 'make second'
 
 Labs work on Windows only
+
+Operations:
+
+'+' - add
+
+'-' - sub
+
+'u' - mul
+
+'/' - div
+
+'%' - mod
+
+'d' - deg
