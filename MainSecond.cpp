@@ -29,7 +29,7 @@ int main(int argc, const char * argv[])
 	fclose(firstLongNumFile);
 
     const char* operation = argv[2];
-    if ((strlen(operation) > 1 || operation[0] == '\0') || operation[0] != '+' && operation[0] != '-' && operation[0] != '*' && operation[0] != '/' && operation[0] != '%' && operation[0] != 'd') 
+    if ((strlen(operation) > 1 || operation[0] == '\0') || operation[0] != '+' && operation[0] != '-' && operation[0] != 'u' && operation[0] != '/' && operation[0] != '%' && operation[0] != 'd') 
 	{
         printf("Error: Unknown operation: %s \n", operation);
         return 0;
@@ -124,7 +124,7 @@ int main(int argc, const char * argv[])
             result = a - b;
             break;
         }
-        case '*':
+        case 'u':
         {
             result = a * b;
             break;
@@ -148,7 +148,8 @@ int main(int argc, const char * argv[])
 				c.ReadText(argv[5]);
 
 			result = Degree(a, b, c);
-            break;
+			c.ClearMemory();
+			break;
         }
     }    
        
@@ -156,6 +157,8 @@ int main(int argc, const char * argv[])
 		result.WriteBin(argv[4]);
 	else
 		result.WriteText(argv[4]);
-
+	result.ClearMemory();
+	a.ClearMemory();
+	b.ClearMemory();
 	return 0;
 }
