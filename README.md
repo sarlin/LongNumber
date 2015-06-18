@@ -5,10 +5,10 @@ How to use Makefile:
 
 -first lab
 
-  -type in cosole 'make first' or just 'make'
+    -type in cosole 'make first' or just 'make'
 
--second lab
+-second lab:
 
-  -type in console 'make second'
+    -type in console 'make second'
 
-Now labs work on Windows only
+Labs work on Windows only
