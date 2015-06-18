@@ -31,7 +31,7 @@ int main(int argc, const char * argv[])
 		const char* operation = argv[2];
 		if ((strlen(operation) > 1 || operation[0] == '\0') || (operation[0] != '+' && operation[0] != '-' && operation[0] != 'u' && operation[0] != '/' && operation[0] != '%' && operation[0] != 'd'))
 		{
-			printf("Error: Wrong operation: %s \n", operation);
+			printf("Error: Unknown operation: %s \n", operation);
 			return 0;
 		}
 
