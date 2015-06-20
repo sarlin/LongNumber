@@ -61,7 +61,7 @@ int main(int argc, const char * argv[])
 			FILE* moduleLongNumFile = fopen(argv[5], "r");
 			if (!moduleLongNumFile) 
 			{
-				printf("Error: Unable to open file: %s \n", argv[5]);
+				printf("Error: Module file not found: %s \n", argv[5]);
 				return 0;
 			}
 			fclose(moduleLongNumFile);
