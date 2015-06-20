@@ -33,7 +33,7 @@ public:
 	void ReadBin(const char *filename);
 	void WriteBin(const char *filename);
 
-	friend ClassLong PowMod(ClassLong &base, ClassLong &exp, ClassLong &mod); // res = ClassLong.PowMod(a,b,c)
+	friend ClassLong PowMod(ClassLong &base, ClassLong &exp, ClassLong &mod);
 	friend ClassLong PowMod(ClassLong &base, ClassLong &exp, unsigned long long int mod);
 	friend ClassLong PowMod(ClassLong &base, unsigned long long int exp, ClassLong &mod);
 	friend ClassLong PowMod(unsigned long long int base, ClassLong &exp, ClassLong &mod);
