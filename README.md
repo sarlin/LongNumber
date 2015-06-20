@@ -5,16 +5,15 @@ How to use Makefile:
 
 -first lab
 
-    -type in cosole 'make first' or just 'make'
-
+    -type in cosole 'make first' or just
+    
 -second lab:
-ччы
 
     -type in console 'make second'
 
-Labs work on Windows only
+FirstLab and SecondLab work on Windows only
 
-Operations:
+Operations for first two labs:
 
 '+' - add
 
