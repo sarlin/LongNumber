@@ -10,7 +10,7 @@ ClassLong::ClassLong()
 ClassLong::ClassLong(const LongNumber &right)
 {
 	num = Copy(right);
-}z
+}
 
 ClassLong::ClassLong(const char* string)
 {
