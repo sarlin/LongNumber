@@ -36,13 +36,13 @@ ClassLong::~ClassLong()
 char* ClassLong::__str__()
 {
 	ClassLong replica = Copy(this->Number);
-	return PrintNumber(replica.Number);
+	return PrintNum(replica.Number);
 }
 
 char* ClassLong::__repr__()
 {
 	ClassLong replica = Copy(this->Number);
-	return PrintNumber(replica.Number);
+	return PrintNum(replica.Number);
 }
 
 ClassLong ClassLong::operator=(const ClassLong &right)
@@ -63,12 +63,12 @@ ClassLong ClassLong::operator+(unsigned long long int value)
 
 ClassLong ClassLong::operator-(const ClassLong &right) 
 {
-	return DIf(this->Number, right.Number);
+	return Dif(this->Number, right.Number);
 }
 
 ClassLong ClassLong::operator-(unsigned long long int value)
 {
-	return DIf(this->Number, ReadNum(value));
+	return Dif(this->Number, ReadNum(value));
 }
 
 ClassLong ClassLong::operator*(const ClassLong &right) 
