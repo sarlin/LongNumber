@@ -123,37 +123,37 @@ ClassLong ClassLong::operator%(const ClassLong &right)
 	return Div(this->num, right.num, 2);
 }
 
-ClassLong PowMod(ClassLong &base, ClassLong &exp, ClassLong &mod)
+ClassLong Pow(ClassLong &base, ClassLong &exp, ClassLong &mod)
 {
 	return Deg(base.num, exp.num, mod.num);
 }
 
-ClassLong PowMod(ClassLong &base, ClassLong &exp, unsigned long long int mod)
+ClassLong Pow(ClassLong &base, ClassLong &exp, unsigned long long int mod)
 {
 	return Deg(base.num, exp.num, ReadNum(mod));
 }
 
-ClassLong PowMod(ClassLong &base, unsigned long long int exp, ClassLong &mod)
+ClassLong Pow(ClassLong &base, unsigned long long int exp, ClassLong &mod)
 {
 	return Deg(base.num, ReadNum(exp), mod.num);
 }
 
-ClassLong PowMod(unsigned long long int base, ClassLong &exp, ClassLong &mod)
+ClassLong Pow(unsigned long long int base, ClassLong &exp, ClassLong &mod)
 {
 	return Deg(ReadNum(base), exp.num, mod.num);
 }
 
-ClassLong PowMod(ClassLong &base, unsigned long long int exp, unsigned long long int mod)
+ClassLong Pow(ClassLong &base, unsigned long long int exp, unsigned long long int mod)
 {
 	return Deg(base.num, ReadNum(exp), ReadNum(mod));
 }
 
-ClassLong PowMod(unsigned long long int base, ClassLong &exp, unsigned long long int mod)
+ClassLong Pow(unsigned long long int base, ClassLong &exp, unsigned long long int mod)
 {
 	return Deg(ReadNum(base), exp.num, ReadNum(mod));
 }
 
-ClassLong PowMod(unsigned long long int base, unsigned long long int exp, ClassLong &mod)
+ClassLong Pow(unsigned long long int base, unsigned long long int exp, ClassLong &mod)
 {
 	return Deg(ReadNum(base), ReadNum(exp), mod.num);
 }
