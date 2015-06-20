@@ -8,6 +8,7 @@ How to use Makefile:
     -type in cosole 'make first' or just 'make'
 
 -second lab:
+ччы
 
     -type in console 'make second'
 
