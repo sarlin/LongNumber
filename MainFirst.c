@@ -8,13 +8,13 @@ int main(int argc, const char * argv[])
 {
 	struct LongNumber a,b,result;
 	
-	if (argc < 5)
-		{
-			printf("Error: Not enough arguments\n");
-			return 0;
-		}
+	if ((argc < 5) || (argc > 7))
+	{
+		printf("Error: wrong arguments' number\n");
+		return 0;
+	}
 
-		if (argc > 7)
+	if (argc > 7)
 		{
 			printf("Error: Too many arguments\n");
 			return 0;
