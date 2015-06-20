@@ -1,4 +1,4 @@
-all: thirdLin
+all: thirdlin
 first:
 	g++ MainFirst.c LibraryLong.c -o LabFirst -lm
 second:
