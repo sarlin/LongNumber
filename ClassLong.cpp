@@ -57,14 +57,14 @@ void ClassLong::ReadBin(const char* filename)
 
 void ClassLong::WriteText(const char* filename)
 {
-	ClassLong replic = Copy(this->num);
-	WriteTextFile(filename, replica.num);
+	ClassLong RoRoRo = Copy(this->num);
+	WriteTextFile(filename, RoRoRo.num);
 }
 
 void ClassLong::WriteBin(const char* filename)
 {
-	ClassLong replica = Copy(this->num);
-	WriteBinFile(filename, replica.num);
+	ClassLong RoRoRo = Copy(this->num);
+	WriteBinFile(filename, RoRoRo.num);
 }
 
 ClassLong ClassLong::operator=(const ClassLong &right)
