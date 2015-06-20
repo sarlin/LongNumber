@@ -1,25 +1,43 @@
-#include "LibraryLong.h"
+#include "LongNumber.h"
 
-class LN_Class
+class ClassLong
 {
 	LongNumber num;
 
 public:
 
-	LN_Class() {} 
+	ClassLong();
+	ClassLong(const char *string);
+	ClassLong(const ClassLong &right);
+	ClassLong(const LongNumber &right);
+	ClassLong(const unsigned long long int value);
+	~ClassLong();
 
-	LN_Class& operator=(const LN_Class& rhv); 
-	LN_Class operator+(LN_Class &right);
-	LN_Class operator-(LN_Class &right);
-	LN_Class operator*(LN_Class &right);
-	LN_Class operator/(LN_Class &right);
-	LN_Class operator%(LN_Class &right);
+	char* _str();
+	char* _rep();
 
-	void ReadText(const char* filename);
-	void WriteText(const char* filename);
-	void ReadBin(const char* filename);
-	void WriteBin(const char* filename);
-	void ClearMemory();
+	void ReadText(const char *filename);
+	void WriteText(const char *filename);
+	void ReadBin(const char *filename);
+	void WriteBin(const char *filename);
 
-	friend LN_Class Degree(LN_Class &base, LN_Class &exp, LN_Class &mod); 
+	ClassLong operator=(const ClassLong &right);
+	ClassLong operator+(const ClassLong &right);
+	ClassLong operator+(const unsigned long long int value); 
+	ClassLong operator-(const ClassLong &right);
+	ClassLong operator-(const unsigned long long int value);
+	ClassLong operator*(const ClassLong &right);
+	ClassLong operator*(const unsigned long long int value);
+	ClassLong operator/(const ClassLong &right);
+	ClassLong operator/(const unsigned long long int value);
+	ClassLong operator%(const ClassLong &right);
+	ClassLong operator%(const unsigned long long int value);
+
+	friend ClassLong Pow(ClassLong &base, ClassLong &exp, ClassLong &mod); 
+	friend ClassLong Pow(ClassLong &base, ClassLong &exp, unsigned long long int mod);
+	friend ClassLong Pow(ClassLong &base, unsigned long long int exp, ClassLong &mod);
+	friend ClassLong Pow(unsigned long long int base, ClassLong &exp, ClassLong &mod);
+	friend ClassLong Pow(ClassLong &base, unsigned long long int exp, unsigned long long int mod);
+	friend ClassLong Pow(unsigned long long int base, ClassLong &exp, unsigned long long int mod);
+	friend ClassLong Pow(unsigned long long int base, unsigned long long int exp, ClassLong &mod);
 };
