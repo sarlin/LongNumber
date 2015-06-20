@@ -33,8 +33,6 @@ ClassLong::~ClassLong()
 		delete[] this->num.part;
 }
 
-/////////////////////////////////////////////////////////////////////////////
-
 char* ClassLong::__str__()
 {
 	ClassLong replica = Copy(this->num);
@@ -47,8 +45,6 @@ char* ClassLong::__repr__()
 	return PrintNum(replica.num);
 }
 
-/////////////////////////////////////////////////////////////////////////////
-
 ClassLong ClassLong::operator=(const ClassLong &right)
 {
 	this->num = Copy(right.num);
@@ -60,31 +56,14 @@ ClassLong ClassLong::operator+(const ClassLong &right)
 	return Sum(this->num, right.num);
 }
 
-ClassLong ClassLong::operator-(const ClassLong &right) 
-{
-	return Dif(this->num, right.num);
-}
-
-ClassLong ClassLong::operator*(const ClassLong &right) 
-{
-	return Mul(this->num, right.num);
-}
-
-ClassLong ClassLong::operator/(const ClassLong &right) 
-{
-	return Div(this->num, right.num, 1);
-}
-
-ClassLong ClassLong::operator%(const ClassLong &right) 
-{
-	return Div(this->num, right.num, 2);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-
 ClassLong ClassLong::operator+(unsigned long long int value) 
 {
 	return Sum(this->num, ReadNum(value));
+}
+
+ClassLong ClassLong::operator-(const ClassLong &right) 
+{
+	return Dif(this->num, right.num);
 }
 
 ClassLong ClassLong::operator-(unsigned long long int value) 
@@ -92,9 +71,19 @@ ClassLong ClassLong::operator-(unsigned long long int value)
 	return Dif(this->num, ReadNum(value));
 }
 
+ClassLong ClassLong::operator*(const ClassLong &right) 
+{
+	return Mul(this->num, right.num);
+}
+
 ClassLong ClassLong::operator*(unsigned long long int value) 
 {
 	return Mul(this->num, ReadNum(value));
+}
+
+ClassLong ClassLong::operator/(const ClassLong &right) 
+{
+	return Div(this->num, right.num, 1);
 }
 
 ClassLong ClassLong::operator/(unsigned long long int value) 
@@ -102,12 +91,15 @@ ClassLong ClassLong::operator/(unsigned long long int value)
 	return Div(this->num, ReadNum(value), 1);
 }
 
+ClassLong ClassLong::operator%(const ClassLong &right) 
+{
+	return Div(this->num, right.num, 2);
+}
+
 ClassLong ClassLong::operator%(unsigned long long int value) 
 {
 	return Div(this->num, ReadNum(value), 2);
 }
-
-/////////////////////////////////////////////////////////////////////////////
 
 void ClassLong::ReadText(const char* filename)
 {
@@ -130,8 +122,6 @@ void ClassLong::WriteBin(const char* filename)
 	ClassLong replica = Copy(this->num);
 	WriteBinFile(filename, replica.num);
 }
-
-/////////////////////////////////////////////////////////////////////////////
 
 ClassLong PowMod(ClassLong &base, ClassLong &exp, ClassLong &mod)
 {
