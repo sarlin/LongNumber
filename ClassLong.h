@@ -2,7 +2,7 @@
 
 class ClassLong
 {
-	LongNumber number;
+	LongNumber num;
 
 public:
 
