@@ -18,5 +18,5 @@ thirdlin:
 	swig -c++ -python -o ClassLong_wrap.cpp ClassLong.i
 	g++ -c -fPIC ClassLong.cpp -o ClassLong.o
 	g++ -c -fPIC LibraryLong.c -o LibraryLong.o
-	g++ -fPIC -c ClassLong-wrap.cpp -I/usr/include/python2.7
+	g++ -fPIC -c ClassLong_wrap.cpp -I/usr/include/python2.7
 	g++ -shared ClassLong.o LibraryLong.o ClassLong_wrap.o -o _ClassLong.so
