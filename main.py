@@ -1,8 +1,8 @@
-import ClassLong
+import LN_Class
 import sys
 import os
 
-if ((len(sys.argv) < 5) or (len(sys.argv) > 7) :
+if ((len(sys.argv) < 5) || (len(sys.argv) > 7) :
     print "Error: Wrong arguments' number"
     sys.exit(0)
 
@@ -26,7 +26,7 @@ bin = 0
 
 if len(sys.argv) == 5 :
     if sys.argv[2][0] == '^' :
-        print "Error: module file not found"
+        print "Error: module file is missed"
         sys.exit(0)
 
 if len(sys.argv) == 6 :
@@ -52,9 +52,9 @@ if len(sys.argv) == 7 :
 
     bin = 1
 
-a = ClassLong.ClassLong()
+a = LN_Class.LN_Class()
 
-b = ClassLOng.ClassLong()
+b = LN_Class.LN_Class()
 
 if bin == 1 :
     a.ReadBin(sys.argv[1])
@@ -66,12 +66,10 @@ if bin == 1 :
 else :
     b.ReadText(sys.argv[3])
     
-result = ClassLong.ClassLong()
+result = LN_Class.LN_Class()
     
-
 if sys.argv[2][0] == '+' :
     result = a + b
-
 
 if sys.argv[2][0] == '-' :
     result = a - b
@@ -86,13 +84,13 @@ if sys.argv[2][0] == '%' :
     result = a % b
     
 if sys.argv[2][0] == '^' :
-    c = ClassLong.ClassLong()
+    c = LN_Class.LN_Class()
     if bin == 1 :
 	c.ReadBin(sys.argv[5])
     else :
 	c.ReadText(sys.argv[5])
 
-    result = ClassLong.PowMod(a, b, c)
+    result = LN_Class.PowMod(a, b, c)
   
 if bin == 1 :
     result.WriteBin(sys.argv[4])
