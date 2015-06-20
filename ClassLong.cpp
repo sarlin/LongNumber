@@ -36,13 +36,13 @@ ClassLong::~ClassLong()
 char* ClassLong::_str()
 {
 	ClassLong replica = Copy(this->num);
-	return PrintNumber(replica.num);
+	return PrintNum(replica.num);
 }
 
 char* ClassLong::_rep()
 {
 	ClassLong replica = Copy(this->num);
-	return PrintNumber(replica.num);
+	return PrintNum(replica.num);
 }
 
 void ClassLong::ReadText(const char* filename)
