@@ -8,7 +8,6 @@ struct LongNumber ReadBinFile(const char* file)
 	FILE* f = fopen(file, "r");
 	if (!f)
 	{
-		printf("Error: Unable to open file: %s \n", file);
 		struct LongNumber number;
 		number.size = 1;
 		number.part[0] = 0;
@@ -78,7 +77,6 @@ struct LongNumber ReadTextFile(const char* file)
 	FILE* f = fopen(file, "r");
 	if (!f)
 	{
-		printf("Error: Unable to open file: %s \n", file);
 		number.size = 1;
 		number = Allocate(number, number.size);
 		fclose(f);
@@ -635,8 +633,7 @@ char* PrintNum(struct LongNumber number)
 	string[0] = '\0';
 
 	for (i = dec.size - 1; i > -1; i--)
-		printf("%c", dec.part[i]);
-
+	
 	dec = Clear(dec);
 
 	return string;
@@ -652,7 +649,6 @@ struct LongNumber ReadStr(const char* num)
 	for (; i < strlen(num); i++)
 	if (num[i] < '0' || num[i] > '9')
 	{
-		printf("Error: Wrong string: %s \n", num);
 		bin.part = (unsigned int*)malloc(sizeof(unsigned int)*(1));
 		bin.part[0] = 0;
 		bin.size = 1;
