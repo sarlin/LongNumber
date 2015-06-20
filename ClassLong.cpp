@@ -2,46 +2,46 @@
 
 ClassLong::ClassLong()
 { 
-    this->num.pointer = (unsigned int*)malloc(sizeof(unsigned int)*(1));
-	this->num.pointer[0] = 0;
+    this->num.part = (unsigned int*)malloc(sizeof(unsigned int)*(1));
+	this->num.part[0] = 0;
     this->num.size = 1;
 }
 
 ClassLong::ClassLong(const LongNumber &right)
 {
-	num = copy(right);
+	num = Copy(right);
 }
 
 ClassLong::ClassLong(const char* string)
 {
-	this->num = ReadString(string);
+	this->num = ReadStr(string);
 }
 
 ClassLong::ClassLong(const ClassLong &right)
 {
-	this->num = copy(right.num);
+	this->num = Copy(right.num);
 }
 
 ClassLong::ClassLong(const unsigned long long int value)
 {
-	this->num = ReadNumber(value);
+	this->num = ReadNum(value);
 }
 
 ClassLong::~ClassLong()
 {
 	if (this->num.size) 
-		delete[] this->num.pointer;
+		delete[] this->num.part;
 }
 
 char* ClassLong::_str()
 {
-	ClassLong replica = copy(this->num);
+	ClassLong replica = Copy(this->num);
 	return PrintNumber(replica.num);
 }
 
 char* ClassLong::_rep()
 {
-	ClassLong replica = copy(this->num);
+	ClassLong replica = Copy(this->num);
 	return PrintNumber(replica.num);
 }
 
@@ -57,103 +57,103 @@ void ClassLong::ReadBin(const char* filename)
 
 void ClassLong::WriteText(const char* filename)
 {
-	ClassLong RoRoRo = copy(this->num);
+	ClassLong RoRoRo = Copy(this->num);
 	WriteTextFile(filename, RoRoRo.num);
 }
 
 void ClassLong::WriteBin(const char* filename)
 {
-	ClassLong RoRoRo = copy(this->num);
+	ClassLong RoRoRo = Copy(this->num);
 	WriteBinFile(filename, RoRoRo.num);
 }
 
 ClassLong ClassLong::operator=(const ClassLong &right)
 {
-	this->num = copy(right.num);
+	this->num = Copy(right.num);
 	return *this;
 }
 
 ClassLong ClassLong::operator+(const ClassLong &right) 
 {
-	return ADD(this->num, right.num);
+	return Sum(this->num, right.num);
 }
 
 ClassLong ClassLong::operator+(unsigned long long int value)
 {
-	return ADD(this->num, ReadNumber(value));
+	return Sum(this->num, ReadNum(value));
 }
 
 ClassLong ClassLong::operator-(const ClassLong &right) 
 {
-	return SUB(this->num, right.num);
+	return Dif(this->num, right.num);
 }
 
 ClassLong ClassLong::operator-(unsigned long long int value)
 {
-	return SUB(this->num, ReadNumber(value));
+	return Dif(this->num, ReadNum(value));
 }
 
 ClassLong ClassLong::operator*(const ClassLong &right)
 {
-	return MUL(this->num, right.num);
+	return Mul(this->num, right.num);
 }
 
 ClassLong ClassLong::operator*(unsigned long long int value) 
 {
-	return MUL(this->num, ReadNumber(value));
+	return Mul(this->num, ReadNum(value));
 }
 
 ClassLong ClassLong::operator/(const ClassLong &right)
 {
-	return DIV(this->num, right.num, 1);
+	return Div(this->num, right.num, 1);
 }
 
 ClassLong ClassLong::operator/(unsigned long long int value) 
 {
-	return DIV(this->num, ReadNumber(value), 1);
+	return Div(this->num, ReadNum(value), 1);
 }
 
 ClassLong ClassLong::operator%(unsigned long long int value) 
 {
-	return DIV(this->num, ReadNumber(value), 2);
+	return Div(this->num, ReadNum(value), 2);
 }
 
 ClassLong ClassLong::operator%(const ClassLong &right)
 {
-	return DIV(this->num, right.num, 2);
+	return Div(this->num, right.num, 2);
 }
 
 ClassLong PowMod(ClassLong &base, ClassLong &exp, ClassLong &mod)
 {
-	return DEGREE(base.num, exp.num, mod.num);
+	return Deg(base.num, exp.num, mod.num);
 }
 
 ClassLong PowMod(ClassLong &base, ClassLong &exp, unsigned long long int mod)
 {
-	return DEGREE(base.num, exp.num, ReadNumber(mod));
+	return Deg(base.num, exp.num, ReadNum(mod));
 }
 
 ClassLong PowMod(ClassLong &base, unsigned long long int exp, ClassLong &mod)
 {
-	return DEGREE(base.num, ReadNumber(exp), mod.num);
+	return Deg(base.num, ReadNum(exp), mod.num);
 }
 
 ClassLong PowMod(unsigned long long int base, ClassLong &exp, ClassLong &mod)
 {
-	return DEGREE(ReadNumber(base), exp.num, mod.num);
+	return Deg(ReadNum(base), exp.num, mod.num);
 }
 
 ClassLong PowMod(ClassLong &base, unsigned long long int exp, unsigned long long int mod)
 {
-	return DEGREE(base.num, ReadNumber(exp), ReadNumber(mod));
+	return Deg(base.num, ReadNum(exp), ReadNum(mod));
 }
 
 ClassLong PowMod(unsigned long long int base, ClassLong &exp, unsigned long long int mod)
 {
-	return DEGREE(ReadNumber(base), exp.num, ReadNumber(mod));
+	return Deg(ReadNum(base), exp.num, ReadNum(mod));
 }
 
 ClassLong PowMod(unsigned long long int base, unsigned long long int exp, ClassLong &mod)
 {
-	return DEGREE(ReadNumber(base), ReadNumber(exp), mod.num);
+	return Deg(ReadNum(base), ReadNum(exp), mod.num);
 }
