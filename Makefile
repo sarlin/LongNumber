@@ -11,12 +11,12 @@ thirdwin:
 	g++ -c ClassLong.cpp
 	g++ -c LibraryLong.c
 	g++ -c ClassLongWRAP.cxx -IC:\Python27\include
-	g++ ClassLong.o LibraryLong.o ClassLongWRAP.o -Ic:\Python27\include -Lc:\Python27\libs -lPython27 -shared -o ClassLong.pyd
+	g++ ClassLong.o LibraryLong.o ClassLongWRAP.o -Ic:\Python27\include -Lc:\Python27\libs -lPython27 -shared -o _ClassLong.pyd
 	rm -rf *.o *.cxx
 
 thirdlin:
-	swig -c++ -python -o ClassLongWRAP.cpp ClassLong.i
+	swig -c++ -python -o ClassLong_wrap.cpp ClassLong.i
 	g++ -c -fPIC ClassLong.cpp -o ClassLong.o
 	g++ -c -fPIC LibraryLong.c -o LibraryLong.o
-	g++ -fPIC -c ClassLongWRAP.cpp -I/usr/include/python2.7
-	g++ -shared ClassLong.o LibraryLong.o ClassLongWRAP.o -o ClassLong.so
+	g++ -fPIC -c ClassLong-wrap.cpp -I/usr/include/python2.7
+	g++ -shared ClassLong.o LibraryLong.o ClassLong_wrap.o -o _ClassLong.so
