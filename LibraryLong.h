@@ -24,7 +24,6 @@ struct LongNumber Deg(struct LongNumber a, struct LongNumber b, struct LongNumbe
 struct LongNumber DivSmall(struct LongNumber a, unsigned long long int b);
 struct LongNumber Clear(struct LongNumber number);
 struct LongNumber Allocate(struct LongNumber number, unsigned int size);
-struct LongNumber Zero(struct LongNumber number, unsigned int size);
 int Compare(struct LongNumber a, struct LongNumber b);
 struct LongNumber Copy(struct LongNumber from);
 struct LongNumber Norm(struct LongNumber a);
