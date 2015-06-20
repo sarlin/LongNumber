@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #define dword 4294967296
 
 struct LongNumber
@@ -24,3 +28,6 @@ struct LongNumber Zero(struct LongNumber number, unsigned int size);
 int Compare(struct LongNumber a, struct LongNumber b);
 struct LongNumber Copy(struct LongNumber from);
 struct LongNumber Norm(struct LongNumber a);
+struct LongNumber ReadNum(unsigned long long int value);
+struct LongNumber ReadStr(const char* num);
+char* PrintNum(struct LongNumber number);
