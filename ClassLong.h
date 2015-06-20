@@ -1,4 +1,4 @@
-#include "LongNumber.h"
+#include "LibraryLong.h"
 
 class ClassLong
 {
