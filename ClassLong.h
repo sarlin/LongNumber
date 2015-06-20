@@ -2,10 +2,9 @@
 
 class ClassLong
 {
-	LongNumber num;
-
 public:
-
+	LongNumber num;
+	
 	ClassLong();
 	ClassLong(const char *string);
 	ClassLong(const ClassLong &right);
