@@ -8,15 +8,9 @@ int main(int argc, const char * argv[])
 {
 	LN_Class a, b, result;
 
-	if (argc < 5) 
+	if (argc < 5) || (argc > 7)
 	{
-		printf("Error: Not enough arguments\n");
-		return 0;
-    }
-    
-    if (argc > 7) 
-	{
-		printf("Error: Too many arguments\n");
+		printf("Error: Wrong arguments' number\n");
 		return 0;
     }
     
