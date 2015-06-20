@@ -1,4 +1,4 @@
-%module LN_Class
+%module ClassLong
 %{
 	#include "ClassLong.h"
 %}
