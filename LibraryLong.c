@@ -361,7 +361,7 @@ struct LongNumber Mul(struct LongNumber a, struct LongNumber b)
     	return res;
 }
 
-struct LongNumber Div(struct LongNumber a, struct LongNumber b, int sumbols)
+struct LongNumber Div(struct LongNumber a, struct LongNumber b, int choice)
 {
 	struct LongNumber ost; 
     	if (Compare(a, b) < 0)
@@ -370,7 +370,7 @@ struct LongNumber Div(struct LongNumber a, struct LongNumber b, int sumbols)
         	res.size = 1;
         	res = Allocate(res, res.size);
         	res.part[0] = 0;
-		if(sumbols == 1)
+		if(choice == 1)
 			return res;
 		else
 			return a;
@@ -385,7 +385,7 @@ struct LongNumber Div(struct LongNumber a, struct LongNumber b, int sumbols)
         }
 	struct LongNumber res = DivSmall(a, b.part[0]);
         ost = Dif(a, MulSmall(res,b.part[0]));
-        if(sumbols == 1)
+        if(choice == 1)
 		return res;
 	else
 		return ost;
@@ -418,7 +418,7 @@ struct LongNumber Div(struct LongNumber a, struct LongNumber b, int sumbols)
     	}
 	ost = ToNorm(ost);
 	res = ToNorm(res);
-    	if(sumbols == 1)
+    	if(choice == 1)
 		return res;
 	else
 		return ost;
