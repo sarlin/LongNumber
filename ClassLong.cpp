@@ -29,8 +29,8 @@ ClassLong::ClassLong(const unsigned long long int value)
 
 ClassLong::~ClassLong()
 {
-	if (this->Number.size) 
-		delete[] this->Number.part;
+	if (this->Number.part != 0) 
+		this->Number = Clear(Number);
 }
 
 char* ClassLong::__str__()
