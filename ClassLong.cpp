@@ -29,7 +29,7 @@ ClassLong::ClassLong(const unsigned long long int value)
 
 ClassLong::~ClassLong()
 {
-	if (this->Number.part != 0) 
+	if (this->Number.size) 
 		this->Number = Clear(Number);
 }
 
